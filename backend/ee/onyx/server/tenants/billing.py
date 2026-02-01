@@ -19,6 +19,7 @@ logger = setup_logger()
 def fetch_stripe_checkout_session(
     tenant_id: str,
     billing_period: Literal["monthly", "annual"] = "monthly",
+    seats: int | None = None,
 ) -> str:
     token = generate_data_plane_token()
     headers = {
@@ -29,10 +30,15 @@ def fetch_stripe_checkout_session(
     payload = {
         "tenant_id": tenant_id,
         "billing_period": billing_period,
+        "seats": seats,
     }
     response = requests.post(url, headers=headers, json=payload)
-    response.raise_for_status()
-    return response.json()["sessionId"]
+    data = response.json()
+    if not response.ok or data.get("error"):
+        raise Exception(
+            data.get("error") or f"Request failed with status {response.status_code}"
+        )
+    return data["sessionId"]
 
 
 def fetch_tenant_stripe_information(tenant_id: str) -> dict:
@@ -51,7 +57,6 @@ def fetch_tenant_stripe_information(tenant_id: str) -> dict:
 def fetch_billing_information(
     tenant_id: str,
 ) -> BillingInformation | SubscriptionStatusResponse:
-    logger.info("Fetching billing information")
     token = generate_data_plane_token()
     headers = {
         "Authorization": f"Bearer {token}",

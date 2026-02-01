@@ -417,6 +417,7 @@ async def proxy_license_fetch(
         )
 
     # Return license to caller - self-hosted instance stores it via /api/license/claim
+    # Return license to caller - self-hosted instance stores it via /api/license/claim
     return LicenseFetchResponse(license=license_data, tenant_id=tenant_id)
 
 
@@ -445,6 +446,7 @@ async def proxy_seat_update(
         },
     )
 
+    # Return license in response - self-hosted instance stores it via /api/license/claim
     # Return license in response - self-hosted instance stores it via /api/license/claim
     return SeatUpdateResponse(
         success=result.get("success", False),
