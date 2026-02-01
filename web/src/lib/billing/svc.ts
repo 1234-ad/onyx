@@ -29,6 +29,7 @@ function getBillingBaseUrl(): string {
 }
 
 async function billingPost<T>(endpoint: string, body?: unknown): Promise<T> {
+  console.log("billingPost", `${getBillingBaseUrl()}${endpoint}`, body);
   const response = await fetch(`${getBillingBaseUrl()}${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
