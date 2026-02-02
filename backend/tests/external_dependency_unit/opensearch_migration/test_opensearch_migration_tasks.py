@@ -289,16 +289,16 @@ def opensearch_client(
     # TODO(andrei): DELETE BEFORE MERGING!
     # We want to print the active search settings to debug CI.
     logger.error(
-        f"ANDREI: Active search settings in opensearch_client: {active.primary.index_name}"
+        f"ANDREI: Active primary search settings in opensearch_client: {active.primary.index_name}"
     )
     logger.error(
-        f"ANDREI: Active search settings in opensearch_client: {active.primary.model_dim}"
+        f"ANDREI: Active primary search settings in opensearch_client: {active.primary.model_dim}"
     )
     logger.error(
-        f"ANDREI: Active search settings in opensearch_client: {active.secondary.index_name}"
+        f"ANDREI: Active secondary search settings in opensearch_client: {active.secondary.index_name}"
     )
     logger.error(
-        f"ANDREI: Active search settings in opensearch_client: {active.secondary.model_dim}"
+        f"ANDREI: Active secondary search settings in opensearch_client: {active.secondary.model_dim}"
     )
     yield OpenSearchClient(index_name=active.primary.index_name)  # Test runs here.
 
@@ -401,16 +401,16 @@ def clean_opensearch(
     # We want to print the active search settings to debug CI.
     active = get_active_search_settings(db_session)
     logger.error(
-        f"ANDREI: Active search settings in clean_opensearch: {active.primary.index_name}"
+        f"ANDREI: Active primary search settings in clean_opensearch: {active.primary.index_name}"
     )
     logger.error(
-        f"ANDREI: Active search settings in clean_opensearch: {active.primary.model_dim}"
+        f"ANDREI: Active primary search settings in clean_opensearch: {active.primary.model_dim}"
     )
     logger.error(
-        f"ANDREI: Active search settings in clean_opensearch: {active.secondary.index_name}"
+        f"ANDREI: Active secondary search settings in clean_opensearch: {active.secondary.index_name}"
     )
     logger.error(
-        f"ANDREI: Active search settings in clean_opensearch: {active.secondary.model_dim}"
+        f"ANDREI: Active secondary search settings in clean_opensearch: {active.secondary.model_dim}"
     )
     for document in test_documents:
         _delete_document_chunks_from_opensearch(

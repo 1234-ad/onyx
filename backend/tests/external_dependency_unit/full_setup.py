@@ -72,16 +72,16 @@ def ensure_full_deployment_setup(
             # TODO(andrei): DELETE BEFORE MERGING!
             # We want to print the active search settings to debug CI.
             logger.error(
-                f"ANDREI: Active search settings in setup: {active.primary.index_name}"
+                f"ANDREI: Active primary search settings in setup: {active.primary.index_name}"
             )
             logger.error(
-                f"ANDREI: Active search settings in setup: {active.primary.model_dim}"
+                f"ANDREI: Active primary search settings in setup: {active.primary.model_dim}"
             )
             logger.error(
-                f"ANDREI: Active search settings in setup: {active.secondary.index_name}"
+                f"ANDREI: Active secondary search settings in setup: {active.secondary.index_name}"
             )
             logger.error(
-                f"ANDREI: Active search settings in setup: {active.secondary.model_dim}"
+                f"ANDREI: Active secondary search settings in setup: {active.secondary.model_dim}"
             )
             if opensearch_available:
                 logger.error(

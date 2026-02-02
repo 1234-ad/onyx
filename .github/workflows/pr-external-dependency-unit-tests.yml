@@ -152,7 +152,8 @@ jobs:
           py.test \
             --durations=8 \
             -o junit_family=xunit2 \
-            -xv \
+            -xvs \
+            --log-cli-level=DEBUG \
             --ff \
             backend/tests/external_dependency_unit/${TEST_DIR}
 
