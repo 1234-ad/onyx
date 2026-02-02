@@ -13,12 +13,15 @@ from onyx.file_store.file_store import get_default_file_store
 from onyx.indexing.models import IndexingSetting
 from onyx.setup import setup_document_indices
 from onyx.setup import setup_postgres
+from onyx.utils.logger import setup_logger
 from shared_configs import configs as shared_configs_module
 from shared_configs.contextvars import CURRENT_TENANT_ID_CONTEXTVAR
 from tests.external_dependency_unit.constants import TEST_TENANT_ID
 
-
 _SETUP_COMPLETE: bool = False
+
+
+logger = setup_logger()
 
 
 def ensure_full_deployment_setup(
@@ -68,9 +71,22 @@ def ensure_full_deployment_setup(
             active = get_active_search_settings(db_session)
             # TODO(andrei): DELETE BEFORE MERGING!
             # We want to print the active search settings to debug CI.
-            print(f"ANDREI: Active search settings in setup: {active}")
+            logger.error(
+                f"ANDREI: Active search settings in setup: {active.primary.index_name}"
+            )
+            logger.error(
+                f"ANDREI: Active search settings in setup: {active.primary.model_dim}"
+            )
+            logger.error(
+                f"ANDREI: Active search settings in setup: {active.secondary.index_name}"
+            )
+            logger.error(
+                f"ANDREI: Active search settings in setup: {active.secondary.model_dim}"
+            )
             if opensearch_available:
-                print(f"ANDREI: Opensearch available in setup: {opensearch_available}")
+                logger.error(
+                    f"ANDREI: Opensearch available in setup: {opensearch_available}"
+                )
                 # We use this special bool here instead of just relying on
                 # ENABLE_OPENSEARCH_INDEXING_FOR_ONYX because not all testing
                 # infra is configured for OpenSearch.
@@ -78,7 +94,7 @@ def ensure_full_deployment_setup(
                     active.primary, active.secondary
                 )
             else:
-                print(
+                logger.error(
                     f"ANDREI: Opensearch not available in setup: {opensearch_available}"
                 )
                 document_indices = [

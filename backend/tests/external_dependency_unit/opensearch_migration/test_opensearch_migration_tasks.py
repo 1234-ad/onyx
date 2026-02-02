@@ -65,11 +65,15 @@ from onyx.document_index.vespa_constants import SOURCE_LINKS
 from onyx.document_index.vespa_constants import TITLE
 from onyx.document_index.vespa_constants import TITLE_EMBEDDING
 from onyx.document_index.vespa_constants import USER_PROJECT
+from onyx.utils.logger import setup_logger
 from shared_configs.contextvars import get_current_tenant_id
 from tests.external_dependency_unit.full_setup import ensure_full_deployment_setup
 
 
 CHUNK_COUNT = 5
+
+
+logger = setup_logger()
 
 
 def _get_document_chunks_from_opensearch(
@@ -284,7 +288,18 @@ def opensearch_client(
     active = get_active_search_settings(db_session)
     # TODO(andrei): DELETE BEFORE MERGING!
     # We want to print the active search settings to debug CI.
-    print(f"ANDREI: Active search settings in opensearch_client: {active}")
+    logger.error(
+        f"ANDREI: Active search settings in opensearch_client: {active.primary.index_name}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in opensearch_client: {active.primary.model_dim}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in opensearch_client: {active.secondary.index_name}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in opensearch_client: {active.secondary.model_dim}"
+    )
     yield OpenSearchClient(index_name=active.primary.index_name)  # Test runs here.
 
 
@@ -385,7 +400,18 @@ def clean_opensearch(
     # TODO(andrei): DELETE BEFORE MERGING!
     # We want to print the active search settings to debug CI.
     active = get_active_search_settings(db_session)
-    print(f"ANDREI: Active search settings in clean_opensearch: {active}")
+    logger.error(
+        f"ANDREI: Active search settings in clean_opensearch: {active.primary.index_name}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in clean_opensearch: {active.primary.model_dim}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in clean_opensearch: {active.secondary.index_name}"
+    )
+    logger.error(
+        f"ANDREI: Active search settings in clean_opensearch: {active.secondary.model_dim}"
+    )
     for document in test_documents:
         _delete_document_chunks_from_opensearch(
             opensearch_client, document.id, get_current_tenant_id()
