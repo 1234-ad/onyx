@@ -70,6 +70,7 @@ def ensure_full_deployment_setup(
             # We want to print the active search settings to debug CI.
             print(f"ANDREI: Active search settings in setup: {active}")
             if opensearch_available:
+                print(f"ANDREI: Opensearch available in setup: {opensearch_available}")
                 # We use this special bool here instead of just relying on
                 # ENABLE_OPENSEARCH_INDEXING_FOR_ONYX because not all testing
                 # infra is configured for OpenSearch.
@@ -77,6 +78,9 @@ def ensure_full_deployment_setup(
                     active.primary, active.secondary
                 )
             else:
+                print(
+                    f"ANDREI: Opensearch not available in setup: {opensearch_available}"
+                )
                 document_indices = [
                     get_default_document_index(active.primary, active.secondary)
                 ]

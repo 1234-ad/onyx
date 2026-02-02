@@ -86,6 +86,9 @@ def get_all_document_indices(
     )
     opensearch_document_index: OpenSearchOldDocumentIndex | None = None
     if ENABLE_OPENSEARCH_INDEXING_FOR_ONYX:
+        print(
+            f"ANDREI: Creating OpenSearch document index for index {search_settings.index_name}"
+        )
         opensearch_document_index = OpenSearchOldDocumentIndex(
             index_name=search_settings.index_name,
             secondary_index_name=None,
@@ -97,4 +100,8 @@ def get_all_document_indices(
     result: list[DocumentIndex] = [vespa_document_index]
     if opensearch_document_index:
         result.append(opensearch_document_index)
+    if not opensearch_document_index:
+        print(
+            f"ANDREI: No OpenSearch document index created for index {search_settings.index_name}"
+        )
     return result
